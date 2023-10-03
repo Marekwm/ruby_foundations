@@ -1,22 +1,30 @@
 def prompt(message)
   puts ">> #{message}"
 end 
+def integer?(num)
+  num.to_i.to_s == num
+end 
 
-def valid_number?(num)
-  num.to_s.to_i != 0
+def float?(num)
+  num.to_f.to_s == num
+end
+
+def number?(num)
+  integer?(num) || float?(num)
 end 
 
 def operation_to_message(op)
-  case op
-  when '1' 
-    "Adding"
-  when '2' 
-    "Subtracting"
-  when '3' 
-    "Multiplying"
-  when '4'
-    "Dividing"
-  end 
+  word = case op
+         when '1' 
+          "Adding"
+         when '2' 
+          "Subtracting"
+         when '3' 
+           "Multiplying"
+         when '4'
+           "Dividing"
+         end 
+  word
 end 
 
 name = ''
@@ -34,9 +42,9 @@ loop do #main loop
   number1 = 0
   loop do 
     prompt("What's the first number?")
-    number1 = gets.to_i
+    number1 = gets.chomp
     
-    if valid_number?(number1)
+    if number?(number1)
       break
     else 
       prompt('Hmmm...that doesnt look like a valid number.')
@@ -45,9 +53,9 @@ loop do #main loop
   number2 = 0
   loop do 
     prompt("What's the second number?")
-    number2 = gets.to_i
+    number2 = gets.chomp
     
-    if valid_number?(number2)
+    if number?(number2)
       break
     else 
       prompt('Hmmm...that doesnt look like a valid number.')
@@ -76,9 +84,9 @@ loop do #main loop
   
   prompt("#{operation_to_message(operator)} the two numbers...")
   result = case operator
-           when '1' then number1 + number2
-           when '2' then number1 - number2
-           when '3' then number1 * number2
+           when '1' then number1.to_f + number2.to_f
+           when '2' then number1.to_f - number2.to_f
+           when '3' then number1.to_f * number2.to_f
            when '4' then number1.to_f / number2.to_f
            end 
            
