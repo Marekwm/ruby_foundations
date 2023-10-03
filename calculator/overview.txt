@@ -1,0 +1,21 @@
+Build a command line calculator program that does the following:
+
+asks for two numbers
+asks for the type of operation to perform: add, subtract, multiply or divide
+displays the result
+Use the Kernel.gets() method to retrieve user input, and use Kernel.puts() method to display output. 
+Remember that Kernel.gets() includes the newline, so you have to call chomp() to remove it: Kernel.gets().chomp().
+
+Standard flow of calculator
+
+input: ask user to give a number
+save that input to `num1`
+input: ask the user to give another number
+save that input to `num2`
+
+input: ask the user to choose what operation they would like to perform add, subtract, multiply or divide?
+save that answer to `operation_choice`
+
+perform operation 
+
+display results
