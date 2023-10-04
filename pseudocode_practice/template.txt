@@ -1,0 +1,27 @@
+PEDAC
+-UNDERSTAND THE PROBLEM
+  -read the problem description
+  -identity inputs/outputs
+  -identify rule/requirements
+  -ask clarifiying questions
+  -examine all examples
+-EXAMPLES/TEST CASES
+  -understand how the input translates to outputs
+  -identify edge cases
+    -Can my program handles 0s, or empty array?
+  -create the test cases and confirm outputs
+-DATA STRUCTURES
+  -what kind of data are you primarily dealing with?
+    -strings, arrays, numbets, objects, etc.
+  -this helps you to focus on methods for these types
+-ALGORITHM
+  -step by step process that takes your from input to output
+  -handles edge cases and valid example inputs
+  -your code will depend on your algorithm
+-CODE
+  -time to write code!
+  -use everything you've gathered in your pedac to write the code
+-DEBUG(if needed)
+  -if there are errors in output, don't panic!
+  -carefully review algorithm before looking at your code
+  -once you've identified the issue, change the algorithm first, then code
