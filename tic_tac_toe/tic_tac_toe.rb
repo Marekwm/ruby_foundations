@@ -9,10 +9,12 @@ def prompt(message)
   puts ">> #{message}"  
 end 
 
-def display_board(board)
+def display_board(board, round, score)
   system 'clear'
   puts ""
   puts "You're a #{PLAYER_1_MARKER}. Computer is #{PLAYER_2_MARKER}"
+  puts "Round #{round}"
+  puts "Score- Player:#{score[:player]} ; Computer:#{score[:computer]}"
   puts "     |     |"
   puts "  #{board[1]}  |  #{board[2]}  |  #{board[3]}"
   puts "     |     |"
@@ -25,6 +27,10 @@ def display_board(board)
   puts "  #{board[7]}  |  #{board[8]}  |  #{board[9]}"
   puts "     |     |"
   puts ""
+end
+
+def display_score(score)
+  prompt " You're score is #{score[:player]}; the computers score is #{score[:computer]}"
 end
 
 def joinor(arr, delimeter = ', ', word = 'or')
@@ -48,8 +54,6 @@ def empty_squares(brd)
   brd.keys.select{|num| brd[num] == INITIAL_MARKER}
 end  
 
-
-
 def player_marks_square!(brd)
   square = ''
   loop do 
@@ -71,10 +75,10 @@ def board_full?(brd)
 end 
 
 def someone_won?(brd)
-  !!detect_winner(brd)
+  !!detect_round_winner(brd)
 end 
 
-def detect_winner(brd)
+def detect_round_winner(brd)
   WINNING_LINES.each do |combo|
     if combo.all? {|square| brd[square] == 'X'}
       return 'Player'
@@ -85,28 +89,51 @@ def detect_winner(brd)
   nil
 end 
 
+def update_score!(brd, score)
+  if detect_round_winner(brd) == 'Player'
+    score[:player] += 1
+  elsif detect_round_winner(brd) == 'Computer'
+    score[:computer] += 1
+  end 
+end 
+
+def detect_game_winner(score)
+  if score[:player] == 5
+    "Player"
+  elsif score[:computer] == 5
+    'Computer'
+  end 
+end 
+    
 loop do #new_game loop
-  board = initialize_board
+  score = {player: 0, computer: 0}
+  round = 1
+  loop do #score loop
+    board = initialize_board
+    loop do #main game loop
+      display_board(board, round, score)
+    
+      player_marks_square!(board)
+       break if someone_won?(board) || board_full?(board)
+    
+      computer_marks_square!(board)
+      break if someone_won?(board) || board_full?(board)
+    end
+    
+    display_board(board, round, score)
+     
+    if someone_won?(board)
+      update_score!(board, score)
+      prompt "#{detect_round_winner(board)} won round #{round}!"
+    else 
+      prompt "It's a tie!"
+    end
+    
+    round += 1
+    break if score[:player] == 5 || score[:computer] == 5
+  end 
   
-  loop do #main game loop
-    display_board(board)
-  
-    player_marks_square!(board)
-     break if someone_won?(board) || board_full?(board)
-  
-    computer_marks_square!(board)
-    break if someone_won?(board) || board_full?(board)
-  
-  end
-  
-  display_board(board)
-   
-  if someone_won?(board)
-    prompt "#{detect_winner(board)} won!"
-  else 
-    prompt "It's a tie!"
-  end
-  
+  prompt "#{detect_game_winner(score)} won the game!"
   prompt 'Do you want to play again?(y or n)'
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
