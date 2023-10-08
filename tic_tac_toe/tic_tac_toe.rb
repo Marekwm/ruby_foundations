@@ -9,6 +9,21 @@ def prompt(message)
   puts ">> #{message}"  
 end 
 
+def display_welcome
+  prompt 'Welcome to Tic Tac Toe!'
+  sleep(0.5)
+end 
+
+def display_game_rules
+  puts <<-MSG
+  The game is played on a grid that's 3 squares by 3 squares.
+  You are X and the Computer is O . Players take turns putting their marks in empty squares.
+  
+  The first player to get 3 marks in a row (up, down, across, or diagonally) is the winner.
+  When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.
+  MSG
+end
+
 def display_board(board, round, score)
   system 'clear'
   puts ""
@@ -66,9 +81,39 @@ def player_marks_square!(brd)
 end 
 
 def computer_marks_square!(brd)
-  square = empty_squares(brd).sample
+  square = nil
+  #if square 5 is available pick it first
+  square = 5 if brd[5] == INITIAL_MARKER
+  
+  # offense
+  if !square
+    WINNING_LINES.each do |line|
+      square = find_at_risk_square(line, brd,  PLAYER_2_MARKER)
+  
+  # defend
+  WINNING_LINES.each do |line|
+    square = find_at_risk_square(line, brd, PLAYER_1_MARKER)
+    break if square
+  end
+      break if square
+    end
+  end
+
+  # pick a random square 
+  if !square
+    square = empty_squares(brd).sample
+  end
+
   brd[square] = PLAYER_2_MARKER
-end 
+end
+
+def find_at_risk_square(line, board, marker)
+  if board.values_at(*line).count(marker) == 2
+    board.select{|k,v| line.include?(k) && v == INITIAL_MARKER}.keys.first
+  else
+    nil
+  end
+end
  
 def board_full?(brd)
   empty_squares(brd).empty?
@@ -104,7 +149,11 @@ def detect_game_winner(score)
     'Computer'
   end 
 end 
+
     
+display_welcome()
+display_game_rules()
+   
 loop do #new_game loop
   score = {player: 0, computer: 0}
   round = 1
@@ -133,7 +182,7 @@ loop do #new_game loop
     break if score[:player] == 5 || score[:computer] == 5
   end 
   
-  prompt "#{detect_game_winner(score)} won the game!"
+  prompt "#{detect_game_winner(score)} is the grand winner!"
   prompt 'Do you want to play again?(y or n)'
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
