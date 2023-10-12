@@ -1,3 +1,4 @@
+=begin
 P - Understanding the Problem:
 - Goal: understand what you're being asked to do
   - Read the problem description
@@ -34,3 +35,39 @@ C - Implementing a Solution in Code:
   - When testing your code, always have an idea in place of what you're expecting
   - If you find that your algorithm doesn't work, return there FIRST if needed and THEN fix your code
   
+PROBLEM
+Write a method that takes two arguments, a positive integer and a boolean, and calculates the bonus for a given salary.
+If the boolean is true, the bonus should be half of the salary. If the boolean is false, the bonus should be 0.
+  
+  EX
+puts calculate_bonus(2800, true) == 1400
+puts calculate_bonus(1000, false) == 0
+puts calculate_bonus(50000, true) == 25000
+
+P 
+INPUT: positive integer, boolean
+OUTPUT: 0 or half of input integer
+RULES
+  -The input represent the salary
+  -The boolean represents if the worker will receive a bonus 
+  -if input boolean is true (return half of input integer) 
+  -if input boolean is false return 0
+  
+D
+none needed, just working with a simple calculation
+
+A
+if boolean input is true
+  -return input integer / 2
+if boolean input is false
+  -return 0
+=end
+def calculate_bonus(salary, bonus)
+  bonus ? (salary / 2) : 0
+end
+  
+  
+  
+puts calculate_bonus(2800, true) == 1400
+puts calculate_bonus(1000, false) == 0
+puts calculate_bonus(50000, true) == 25000

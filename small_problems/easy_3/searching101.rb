@@ -1,3 +1,4 @@
+=begin
 P - Understanding the Problem:
 - Goal: understand what you're being asked to do
   - Read the problem description
@@ -34,3 +35,58 @@ C - Implementing a Solution in Code:
   - When testing your code, always have an idea in place of what you're expecting
   - If you find that your algorithm doesn't work, return there FIRST if needed and THEN fix your code
   
+
+Write a program that solicits 6 numbers from the user, 
+then prints a message that describes whether or not the 6th number appears amongst the first 5 numbers.
+
+P 
+Input: 6 numbers from the user
+Output: validating statement on if the 6th number appears amongst the first five
+Rules
+  explicit requirements: 
+  -get 6 numbers from the user
+  -prints a message that describes whether or not the 6th number appears amongst the first 5 numbers
+D 
+The data structure that will be used is an array to store the first five user inputs 
+[1, 3, 4, 6, 7]
+
+A
+create an empty array named `numbers`
+1.prompt user to input integer
+2.get user input and convert it to integer then push it to numbers
+3. repeat steps 1 and 2 five times 
+
+prompt user for a sixth integer
+store the user input into `search_num`
+
+if search_num is included within numbers 
+  -display a statement that says that search_num appears in numbers
+if search_num is not included within numbers 
+  -display a statement that says that search_num does not appear in numbers
+  
+=end 
+numbers = []
+
+puts 'Enter a number:'
+numbers << gets.to_i
+
+puts 'Enter a number:'
+numbers << gets.to_i
+
+puts 'Enter a number:'
+numbers << gets.to_i
+
+puts 'Enter a number:'
+numbers << gets.to_i
+
+puts 'Enter a number:'
+numbers << gets.to_i
+
+puts 'Enter the number you want to search for'
+search_num = gets.to_i 
+
+if numbers.include?(search_num)
+  puts "The number #{search_num} appears in #{numbers}"
+else 
+  puts "The number #{search_num} does not appear in #{numbers}"
+end 
