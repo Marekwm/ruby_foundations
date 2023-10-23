@@ -1,3 +1,29 @@
+=begin
+P 
+Input:
+Output: 
+Rules:
+  Explicit Requirements:
+    -
+  Implicit Requirements:
+    -
+E 
+
+D 
+Input:
+Output:
+Intermidiate:
+Helper:
+
+A 
+
+
+=end 
+
+
+
+
+
 P - Understanding the Problem:
 - Goal: understand what you're being asked to do
   - Read the problem description
