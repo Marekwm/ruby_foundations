@@ -35,10 +35,9 @@ output: true
 substring: 'a' you need 3 
 
 D 
-Input:'abcdabcd'
-Output:true
-Intermidiate: substring 'abcd'
-Helper: a way to find the all the substrings that are smaller than or equal in length of the input string
+Input:string 'abcdabcd'
+Output:boolean true 
+Intermidiate: substrings 'abcd' ['a','ab','abc','abcd']
 
 A 
 ---helper method to find the desired substrings
@@ -51,47 +50,65 @@ append every substring to `substrings` until the substrings become greater than 
 return `substrings`
 ---
 
-using the array substrings returned by the method iterate over them
-  find the ammount of times the substring must be multiplied by and save it a variable named `combine`
+using the array substrings returned by the helper method, iterate over it
+  find the amount of times the substring must be multiplied by and save it a variable named `combine`
     -divide the lenght of the input string by the length of the substring
   if the substring multiplied by `combine` is equal to the input string
     -return true
   if none of the substrings combinations are equal to the input string return false
 =end 
-def get_substrings(string)
+
+def get_linear_substrings(str)
   substrings = []
-  1.upto(string.length / 2) do |length_of_substring|
-    if string.length % length_of_substring == 0 #only add substrings that are a multiple of the input string 
-      substrings << string[0, length_of_substring]
-    end 
+  (1..(str.length / 2)).each do |size|
+    substrings << str.slice(0,size)
   end 
-  substrings 
-end 
+  substrings
+end
 
-
-def repeated_substring_pattern(string)
-  p substrings = get_substrings(string)
-  
+def repeated_substring_pattern(str)
+  substrings = get_linear_substrings(str)
   substrings.each do |substring|
-    multiplier = string.length / substring.length
-    return true if (substring * multiplier) == string
+    combo = str.size / substring.size
+    return true if substring * combo == str
   end 
   false
 end 
     
-    
-# p repeated_substring_pattern("abab") == true
-# p repeated_substring_pattern("aba") == false
-# p repeated_substring_pattern("aabaaba") == false
-# p repeated_substring_pattern("abaababaab") == true
-# p repeated_substring_pattern("abcabcabcabc") == true
+p repeated_substring_pattern("abab") == true
+p repeated_substring_pattern("aba") == false
+p repeated_substring_pattern("aabaaba") == false
+p repeated_substring_pattern("abaababaab") == true
+p repeated_substring_pattern("abcabcabcabc") == true
 
 # ===========SECOND PART=================================
 =begin
 Given an array of strings made only from lowercase letter, return an array of all
-characters that show up in all strings within the given arry (including duplicates).
-For example, if a character occurs 3 times in all strings but not 4 times, you need to 
+characters that show up in all strings within the given array (including duplicates).
+For example, a character occurs 3 times in all strings but not 4 times, you need to 
 include that character three times in the final answer.
+
+Input: array of strings with only lowercase letters
+Output: array of characters that show up in all the words 
+Rules:
+  Explicit Requirements:
+    -the given array of strings only contains lowercase letters 
+    -each word can be of different length
+    -the returned array contains the characters that show up in all the words 
+    -a character can be included more then once in the output array
+  Implicit Requirements: 
+    -if no characters show up in all the words then return an empty array
+Datastructure
+  input: array of strings [car, cat, cab] 
+  output: array of characters ['c', 'a']
+    
+Algorithm
+we need to iterate over only one substring so for this case just the first string
+convert the string to an array characters
+perform selection on the array
+  evaluate if the current character is included in all the strings 
+return the new array from selection 
+   
 
 p common_chars(['bella', 'label', 'roller']) == ['e', 'l', 'l']
 p common_chars(['cool', 'lock', 'cook']) == ['c', 'o']
@@ -99,3 +116,15 @@ p common_chars(['hello', 'goodbye', 'booya', 'random']) == ['o']
 p common_chars(['aabbbaa', 'cccdddd', 'eeffeef', 'ggrrrrr', 'mmzzz']) = []
 
 =end
+
+def common_chars(arr)
+  new_arr = arr.map {|str| str.dup}
+  characters = new_arr.shift.chars
+  characters.select do |char|
+    new_arr.all? {|word| word.sub!(char, '')}
+  end 
+end 
+p common_chars(['bella', 'label', 'roller'])  == ['e', 'l', 'l']
+p common_chars(['cool', 'lock', 'cook'])== ['c', 'o']
+p common_chars(['hello', 'goodbye', 'booya', 'random']) == ['o']
+p common_chars(['aabbbaa', 'cccdddd', 'eeffeef', 'ggrrrrr', 'mmzzz']) == []

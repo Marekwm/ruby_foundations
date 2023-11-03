@@ -1,4 +1,4 @@
-#####10.5 minutes 
+#####10.5 minutes
 =begin
 P 
 # Given an array of numbers, for each number find out how many numbers
